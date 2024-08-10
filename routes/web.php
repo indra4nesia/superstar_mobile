@@ -9,7 +9,15 @@ use App\Http\Controllers\Members\DashboardController AS DashboardMember;
 use App\Http\Controllers\Members\ClassController AS ClassMember;
 use App\Http\Controllers\Members\MyqrcodeController;
 
-Route::get('/', [AuthController::class, 'signin']);
+
+Route::fallback(function(){
+    if(Auth::check()){
+      return redirect('member/dashboard/');
+    } else {
+      return redirect('/auth/signin');
+    }
+  });
+// Route::get('/', [AuthController::class, 'signin']);
 
 Route::get('/token', function () {
     return csrf_token();
